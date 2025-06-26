@@ -2,12 +2,26 @@ import React, { useState } from "react";
 
 export default function Home() {
 
-    const [color , setColor] = useState('');
-    const [page , setPage] = useState('');
+    const [selectedColor , setSelectedColor] = useState('');
+    const [selectedPage , setSelectedPage] = useState('');
+
+    const pageOptions = [
+        {label: 'Home' , value: 'Home'},
+        {label: 'About' , value: 'About'},
+        {label: 'Contact' , value: 'Contact'}
+    ]
+
+    const colorOptions = [
+        {label: 'Red' , value: 'Red'},
+        {label: 'Blue' , value: 'Blue'},
+        {label: 'Green' , value: 'Green'}
+    ]
 
     const handleSubmit = () => {
         //take in 2 argumensts , 'page' and 'color' and change the BG color of the chosen page
     }
+
+   
 
     return(
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 font-sans">
@@ -18,26 +32,27 @@ export default function Home() {
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Choose Page</label>
-                        <input 
-                            type="text"
-                            placeholder="Home"
-                            value={page}
-                            onChange={(e) => setPage(e.target.value)}
-                            required
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
-                        />
+                        <select value={selectedPage} onChange={(e) => setSelectedPage(e.target.value)}>
+                            <option value="">--Please choose an option--</option>
+                            {
+                                pageOptions.map((page) => (
+                                    <option key={page.value} value={page.value}> {page.label} </option>
+                                ))
+                            }
+                    
+                        </select>
                     </div>
 
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Choose Color</label>
-                        <input 
-                            type="text"
-                            placeholder="White"
-                            value={color}
-                            onChange={(e) => {setColor(e.target.value)}}
-                            required
-                            className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-150 ease-in-out"
-                        />
+                        <select value={selectedColor} onChange={(e) => setSelectedColor(e.target.value)}>
+                            <option value="">--Please select an option--</option>
+                            {
+                                colorOptions.map((color) => {
+                                    return (<option key={color.value} value={color.value}> {color.label} </option>)
+                                })
+                            }
+                        </select>
                     </div>
 
                     <div>
