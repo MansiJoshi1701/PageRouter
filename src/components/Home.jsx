@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { use, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 export default function Home() {
 
@@ -7,17 +7,18 @@ export default function Home() {
 
     const [selectedColor , setSelectedColor] = useState('');
     const [selectedPage , setSelectedPage] = useState('');
-    const BGcolor = "white";
+    const [color , setColor] = useState("white");
 
     //label : is actually what the user sees
     //value : is actually what the code uses
     const pageOptions = [ // pageOptions is an object hence the below syntax
-        {label: 'Home' , value: 'Home'}, 
+        {label: 'Home' , value: '/'}, 
         {label: 'About' , value: 'About'},
         {label: 'Contact' , value: 'Contact'}
     ]
 
     const colorOptions = [
+        {label: 'White' , value: 'White'},
         {label: 'Red' , value: 'Red'},
         {label: 'Blue' , value: 'Blue'},
         {label: 'Green' , value: 'Green'}
@@ -27,14 +28,20 @@ export default function Home() {
         //take in 2 argumensts , 'page' and 'color' and change the BG color of the chosen page
         event.preventDefault(); //Prevents default form submission behavior (which causes a page reload)
         
-        
-        navigate(selectedPage);
+        if(selectedPage === "/"){
+            setColor(selectedColor);
+        }
+
+        //navigate(selectedPage);
+        navigate(selectedPage , {state: {BGcolor: selectedColor}});
     }
 
+    const location = useLocation();
+    
    
 
     return(
-        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 font-sans" style={{backgroundColor: BGcolor}}>
+        <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 font-sans" style={{backgroundColor: color}}>
             <div className="bg-white p-8 rounded-lg shadow-xl w-full max-w-md">
                 <h2 className="text-3xl font-bold text-gray-800 mb-6 text-center">
                     Project Name : Page Router
